@@ -1,0 +1,31 @@
+/* Native CSS cursor only, no JS follower. Pixel arrow (Prime blue, 1px black outline)
+   with its hotspot at the tip (3,2); pixel pointer on interactive elements.
+   The plain url() line is the fallback for browsers without image-set() cursors. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: url(/cursor/cursor-32.svg) 3 2, auto;
+    cursor: image-set(url(/cursor/cursor-32.svg) 1x, url(/cursor/cursor-64.png) 2x) 3 2, auto;
+  }
+
+  a,
+  button,
+  summary,
+  label,
+  [role='tab'],
+  input[type='range'],
+  input[type='checkbox'],
+  input[type='radio'],
+  select {
+    cursor: url(/cursor/pointer-32.svg) 11 2, pointer;
+  }
+
+  input:not([type='range']):not([type='checkbox']):not([type='radio']):not([type='button']):not([type='submit']),
+  textarea {
+    cursor: text;
+  }
+
+  :disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}

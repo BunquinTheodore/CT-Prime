@@ -1,0 +1,183 @@
+/* Shell layout: header, hero frame, mascot placement, final card, footer. Owner: shell agent.
+   Glass recipe (REVISION 2) lives here for the header, hero chips and the final card.
+   Hooks for effects: .final-cta__inner keeps ::before and ::after free and has overflow hidden,
+   so a .glass-sheen pseudo can be layered on it; its children sit at z-index 1. */
+
+.ticker[hidden] { display: none; }
+main, .site-footer { position: relative; z-index: 1; }
+
+/* ---------- Shared glass surface ---------- */
+.site-header::before,
+.chip,
+.final-cta__inner {
+  --glass-blur: 18px;
+  background: linear-gradient(160deg, rgba(169, 193, 242, 0.12), rgba(13, 26, 58, 0.45));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid rgba(169, 193, 242, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 24px 60px rgba(4, 12, 40, 0.55);
+}
+@media (max-width: 720px) {
+  .site-header::before, .chip, .final-cta__inner { --glass-blur: 10px; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header::before, .chip, .final-cta__inner { background: var(--panel-solid); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-header::before, .chip, .final-cta__inner {
+    background: var(--panel-solid);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+}
+
+/* ---------- Header: brand left, mute right ---------- */
+.site-header {
+  position: fixed; inset: 0 0 auto; z-index: 50;
+  padding-top: var(--safe-t);
+}
+/* The glass layer fades in on scroll (opacity only) */
+.site-header::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  border-width: 0 0 1px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 40px rgba(4, 12, 40, 0.45);
+  opacity: 0; visibility: hidden;
+  transition: opacity 260ms var(--ease), visibility 0s linear 260ms;
+}
+.site-header.is-scrolled::before {
+  opacity: 1; visibility: visible;
+  transition: opacity 260ms var(--ease), visibility 0s;
+}
+.header__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--header-h); }
+
+.brand { display: inline-flex; align-items: center; gap: 10px; color: #f4f6fb; flex: none; border-radius: 6px; }
+.brand__mark { width: 40px; height: auto; }
+.brand__word { display: flex; flex-direction: column; font-family: var(--font-logo); text-transform: uppercase; color: #f4f6fb; }
+/* Lockup kept at the banner proportion: COMMUNITY spans the width of PRIME, 14px floor respected */
+.brand__prime { font-weight: 700; font-size: 25px; line-height: 0.92; letter-spacing: 0.04em; }
+.brand__community { font-weight: 300; font-size: 14px; line-height: 1.2; letter-spacing: 0.02em; }
+
+.header__actions { display: flex; align-items: center; flex: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+  --ticker-h: 52px;
+  --mascot-w: clamp(120px, 18vw, 230px);
+  position: relative; isolation: isolate; overflow: clip;
+  min-height: 100svh;
+  display: grid; align-items: center;
+  padding-top: calc(var(--header-h) + var(--safe-t) + 24px);
+  padding-bottom: calc(var(--ticker-h) + var(--mascot-w) * 0.62 + 24px);
+}
+.hero__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.hero__title { font-size: var(--fs-h1); text-wrap: nowrap; }
+.hero__title .mask > span { white-space: nowrap; }
+.hero__l1 { color: var(--text); }
+.hero__l2 { color: var(--prime); }
+
+/* Glass pills. Effects may type their text in; the box keeps its size via min-height */
+.hero__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: clamp(24px, 3.4vw, 36px); }
+.chip {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 26px rgba(4, 12, 40, 0.45);
+  color: var(--sky); font-size: 15px; font-weight: 700; line-height: 1.3;
+}
+.hero__sub { margin-top: 22px; max-width: 52ch; font-size: 18px; color: var(--text-soft); }
+
+/* The one CTA on the page. Glow is a static gradient behind it (clip-path would cut a box-shadow) */
+.hero__actions {
+  position: relative; display: flex; justify-content: center;
+  width: 100%; margin-top: clamp(30px, 4vw, 42px);
+}
+.hero__actions::before {
+  content: ''; position: absolute; left: 50%; top: 50%; z-index: -1; pointer-events: none;
+  width: min(520px, 120%); height: 180%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(86, 131, 218, 0.42), rgba(86, 131, 218, 0.12) 55%, transparent);
+}
+#hero-join {
+  --btn-h: 64px;
+  min-width: 300px;
+  padding-left: 38px; padding-right: calc(38px + var(--cut) * 0.6);
+  gap: 12px; font-size: 19px; font-weight: 800;
+}
+#hero-join svg { width: 26px; height: 26px; }
+#hero-join:hover { transform: translateY(-2px); }
+#hero-join:active { transform: translateY(1px); }
+
+@media (max-width: 600px) {
+  .hero__sub { font-size: 17px; }
+  #hero-join { --btn-h: 60px; width: min(100%, 340px); min-width: 0; padding-left: 24px; padding-right: calc(24px + var(--cut) * 0.6); font-size: 18px; }
+}
+
+/* Ticker container only; the track and items belong to sections.css */
+.ticker {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  height: var(--ticker-h); display: flex; align-items: center; overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: rgba(9, 11, 16, 0.55);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* ---------- Mascot (static placement; peek motion lives in motion.css) ---------- */
+.mascot { position: absolute; bottom: 0; z-index: 3; width: var(--mascot-w, clamp(120px, 18vw, 230px)); pointer-events: none; }
+.mascot .mascot-img { width: 100%; height: auto; margin-bottom: -16%; }
+/* Hero bull peeks from the ticker's top border (motion.css clips at the box bottom), never over live prices */
+.mascot--hero { bottom: var(--ticker-h); right: max(var(--gutter), calc((100% - var(--wrap)) / 2)); }
+.ticker[hidden] ~ .mascot--hero { bottom: 0; }
+
+.mascot__bubble {
+  position: absolute; right: 72%; top: -4%; z-index: 1;
+  padding: 7px 10px 6px; white-space: nowrap;
+  font-size: 14px; line-height: 1.2; text-transform: uppercase;
+  background: var(--horn); color: var(--night);
+  box-shadow: 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 4px 4px 0 rgba(0, 0, 0, 0.35);
+}
+/* Pixel tail: two stepped squares pointing down right toward the head */
+.mascot__bubble::after {
+  content: ''; position: absolute; right: 6px; bottom: -6px;
+  width: 6px; height: 4px; background: var(--horn);
+  box-shadow: 2px 0 0 #000, -2px 0 0 #000, 4px 4px 0 var(--horn), 2px 4px 0 #000, 6px 4px 0 #000, 4px 6px 0 #000;
+}
+
+/* ---------- Final section: closing glass card, no button ---------- */
+.final-cta {
+  --mascot-w: clamp(120px, 16vw, 210px);
+  position: relative; isolation: isolate; overflow: clip;
+  /* Bottom padding is less than the bull's visible height, so its head rises over the card's lower border */
+  padding: var(--section-y) 0 calc(var(--mascot-w) * 0.36);
+  /* Light sources for the glass to refract: brand blue above, ember glow low right */
+  background:
+    radial-gradient(40% 46% at 34% 30%, rgba(86, 131, 218, 0.42), transparent 70%),
+    radial-gradient(34% 40% at 70% 78%, rgba(208, 140, 112, 0.26), transparent 70%),
+    linear-gradient(180deg, transparent, rgba(13, 26, 58, 0.55) 40%, rgba(9, 11, 16, 0.9));
+}
+.final-cta__inner {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  width: min(100% - 2 * var(--gutter), 780px);
+  padding: clamp(44px, 7vw, 84px) clamp(22px, 5vw, 64px);
+  border-radius: 28px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 80px rgba(4, 12, 40, 0.6), 0 0 120px rgba(86, 131, 218, 0.16);
+}
+.final-cta__inner > * { position: relative; z-index: 1; }
+.final-cta__mark { width: clamp(104px, 15vw, 176px); height: auto; color: #f4f6fb; margin-bottom: clamp(26px, 4vw, 40px); }
+.final-cta h2 { font-size: var(--fs-h2); }
+.final-cta__sub { margin-top: 18px; max-width: 46ch; font-size: 18px; color: var(--text-soft); }
+@media (max-width: 600px) { .final-cta__sub { font-size: 17px; } }
+
+/* Bull sits at the card's lower right corner: its head overlaps only the card's bottom padding, not the copy */
+.mascot--cta { left: calc(50% + min(50% - var(--gutter), 390px) - var(--mascot-w) * 0.85); }
+
+/* ---------- Footer ---------- */
+.site-footer { padding: 48px 0 calc(40px + var(--safe-b)); border-top: 1px solid var(--line); background: var(--night); }
+.footer__inner { display: grid; gap: 20px; }
+.footer__brand { display: inline-flex; align-items: center; gap: 10px; color: #f4f6fb; }
+.footer__note, .footer__copy { font-size: 14px; color: var(--text-soft); }
+.footer__note { max-width: 75ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header::before, .site-header.is-scrolled::before { transition: none; }
+  #hero-join:hover { transform: none; }
+}

@@ -1,0 +1,213 @@
+{
+  "siteUrl": "https://ctprime.example",
+  "seo": {
+    "title": "CT Prime Community | Learn to plan your crypto trades",
+    "description": "A free Filipino crypto trading community on Discord. Beginner lessons, live market screening, and traders who plan before they click buy."
+  },
+  "discord": {
+    "url": "https://discord.gg/ctprime"
+  },
+  "hero": {
+    "line1": "Stop guessing.",
+    "line2": "Start planning.",
+    "sub": "CT Prime is a free Discord community where Filipino traders learn the basics, screen the market together, and write a plan before every trade.",
+    "chips": [
+      "Beginner lessons",
+      "Live market screening",
+      "Filipino trading community"
+    ],
+    "cta": "Join CT Prime",
+    "bubble": "GM, trader!"
+  },
+  "ticker": {
+    "symbols": [
+      "BTC",
+      "ETH",
+      "SOL",
+      "XRP",
+      "BNB",
+      "DOGE"
+    ],
+    "label": "Live prices in USDT"
+  },
+  "inside": {
+    "title": "What happens inside",
+    "sub": "Pick a channel to see what it is for.",
+    "channels": [
+      {
+        "id": "beginner-lessons",
+        "name": "beginner-lessons",
+        "title": "Start from zero",
+        "body": "Short lessons on the things nobody explains properly: reading a candle, what support and resistance mean, how leverage can wipe an account, and how to size a position.",
+        "points": [
+          "Candlesticks and timeframes",
+          "Support, resistance and trends",
+          "Risk per trade and position size"
+        ],
+        "visual": "candle"
+      },
+      {
+        "id": "market-screening",
+        "name": "market-screening",
+        "title": "Screen the market together",
+        "body": "Members look at the same charts in real time, call out the setups they see, and talk through why a trade makes sense or why it does not.",
+        "points": [
+          "Shared watchlists",
+          "Setups explained, not just posted",
+          "Real BTC candles from Binance"
+        ],
+        "visual": "chart"
+      },
+      {
+        "id": "trade-plans",
+        "name": "trade-plans",
+        "title": "Plan it before you take it",
+        "body": "Write down your entry, stop loss and target before you click buy. Post it, get feedback, and review it after. That habit is the whole point of CT Prime.",
+        "points": [
+          "Entry, stop loss, target",
+          "Risk to reward before entry",
+          "Review wins and losses"
+        ],
+        "visual": "plan"
+      },
+      {
+        "id": "tambayan",
+        "name": "tambayan",
+        "title": "Kwentuhan with fellow traders",
+        "body": "A Filipino community first. Ask the beginner questions, share what you are learning, and trade ideas in English or Taglish without being judged.",
+        "points": [
+          "Filipino traders",
+          "English or Taglish",
+          "No dumb questions"
+        ],
+        "visual": "chat"
+      }
+    ],
+    "planLabels": {
+      "target": "Target",
+      "entry": "Entry",
+      "stop": "Stop loss"
+    }
+  },
+  "planner": {
+    "title": "Plan a trade in ten seconds",
+    "sub": "This is the habit CT Prime teaches. Set your risk first, then let the numbers tell you how big the trade should be.",
+    "defaults": {
+      "balance": 10000,
+      "riskPct": 1,
+      "entry": 0,
+      "stopPct": 2,
+      "targetPct": 4
+    },
+    "currency": "USDT",
+    "note": "For learning only. Not financial advice. Crypto is volatile and you can lose money.",
+    "ui": {
+      "formLabel": "Trade planner",
+      "balance": "Account balance",
+      "risk": "Risk per trade",
+      "percent": "percent",
+      "inUnit": "in {v}",
+      "riskPresets": "Risk presets",
+      "direction": "Direction",
+      "long": "Long",
+      "short": "Short",
+      "dirHint": "Long means you profit if price goes up. Short means you profit if it goes down.",
+      "entry": "Entry price",
+      "stop": "Stop loss",
+      "target": "Take profit",
+      "live": "BTC live",
+      "tagEntry": "Entry",
+      "tagStop": "Stop",
+      "tagTarget": "Target",
+      "size": "Position size",
+      "unit": "coins",
+      "liveUnit": "BTC",
+      "worth": "Worth {v} {cur} at entry",
+      "lev": "That is {v}x your balance, which needs leverage. Consider a wider stop or a smaller risk.",
+      "riskAmt": "You risk",
+      "stopDist": "Distance to stop",
+      "rr": "Reward to risk",
+      "profit": "Profit at target",
+      "errBalance": "Enter your account balance to size the trade.",
+      "errRisk": "Enter how much of your balance you are willing to lose, for example 1%.",
+      "errRiskMax": "Risk cannot be more than 100% of your balance.",
+      "errEntry": "Enter the price you plan to buy or sell at.",
+      "errStop": "Enter a stop loss price.",
+      "errStopLong": "For a long trade, the stop loss has to be below your entry of {v}. Move it lower.",
+      "errStopShort": "For a short trade, the stop loss has to be above your entry of {v}. Move it higher.",
+      "errTarget": "Enter a take profit price to see your reward.",
+      "errTargetLong": "For a long trade, the take profit has to be above your entry of {v}.",
+      "errTargetShort": "For a short trade, the take profit has to be below your entry of {v}.",
+      "warnRisk": "Risking more than {v}% on one trade can wipe an account fast. Most traders keep it at 1 to 2%.",
+      "warnRr": "Your target is closer than your stop. You would win less than you risk on this trade."
+    }
+  },
+  "steps": {
+    "title": "How to join",
+    "items": [
+      {
+        "title": "Tap Join CT Prime",
+        "body": "It opens our Discord server. Create a free Discord account if you do not have one yet."
+      },
+      {
+        "title": "Start in #beginner-lessons",
+        "body": "Go through the basics at your own pace and ask anything in the community channels."
+      },
+      {
+        "title": "Bring a plan to the screening",
+        "body": "Post your entry, stop loss and target, and let the community check your thinking."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Questions",
+    "items": [
+      {
+        "id": "free",
+        "q": "Is it free to join?",
+        "a": "Yes. Joining the CT Prime Discord is free."
+      },
+      {
+        "id": "beginner",
+        "q": "I have never traded. Is this for me?",
+        "a": "Yes. Start in #beginner-lessons. The community is built for people learning from zero."
+      },
+      {
+        "id": "advice",
+        "q": "Do you give buy and sell signals?",
+        "a": "CT Prime focuses on teaching you to plan and screen trades yourself. Nothing shared in the community is financial advice. Always do your own research."
+      },
+      {
+        "id": "language",
+        "q": "What language is used?",
+        "a": "English and Taglish. It is a Filipino community, so ask in whatever feels natural."
+      },
+      {
+        "id": "need",
+        "q": "What do I need to start?",
+        "a": "A free Discord account and the willingness to learn. You do not need to deposit money to learn the basics."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Tara, trade with a plan.",
+    "sub": "Learn the basics, screen the market with fellow Filipino traders, and stop guessing."
+  },
+  "footer": {
+    "disclaimer": "CT Prime Community is an educational community. Nothing on this site or in the Discord is financial advice. Crypto assets are highly volatile and you may lose some or all of your money. Trade only what you can afford to lose.",
+    "copyright": "CT Prime Community"
+  },
+  "socials": {},
+  "ui": {
+    "muteLabel": "Mute sounds",
+    "tickerError": "",
+    "channelsCategory": "Text channels",
+    "chartPair": "BTC/USDT",
+    "chartCaption": "BTC/USDT, 1 hour candles, live from Binance",
+    "chartLoading": "Loading live BTC candles",
+    "chartFallback": "Live data unavailable",
+    "chartAlt": "Candlestick chart of the last 48 hours of BTC",
+    "candleAlt": "Anatomy of a bullish and a bearish candle: open, close, high and low",
+    "planAlt": "A trade plan: target zone above, entry in the middle, stop loss zone below"
+  }
+}

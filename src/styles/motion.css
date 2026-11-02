@@ -1,0 +1,226 @@
+/* Motion. Owner: effects agent.
+   Every hidden state is gated behind html.js-motion, which reveal.js adds only when
+   motion is allowed, so content is fully visible without JS or with reduced motion.
+   Only transform (via the individual translate and scale properties, so they compose
+   with any transform set in layout.css) and opacity are animated, plus the one time
+   gradient shimmer on hero line 2. One easing. Split text: text.js keeps the real
+   text in an .sr-only span and puts the animated copy in an aria-hidden .split.
+   html.js-motion-sections is the late start variant (bundle ran after the splash):
+   it animates headings and the CTA bull only and never hides the visible hero. */
+
+/* ---------- Hero load sequence (html.hero-in is set at about 1.9s, after the splash) ---------- */
+
+/* Line 1: masked line rise */
+html.js-motion .hero__title .mask > span { translate: 0 110%; }
+html.js-motion.hero-in .hero__title .mask > span {
+  translate: 0 0;
+  transition: translate 760ms var(--ease);
+}
+
+/* Line 2: per character rise inside the line mask, then one shimmer sweep */
+.hero__l2 .ch { display: inline-block; padding-block: 0.1em; margin-block: -0.1em; }
+html.js-motion .hero__title .mask > span[data-split] { translate: none; }
+html.js-motion .hero__l2 .ch { translate: 0 115%; }
+html.js-motion.hero-in .hero__l2 .ch {
+  translate: 0 0;
+  transition: translate 640ms var(--ease) calc(140ms + var(--i, 0) * 30ms);
+}
+html.js-motion .hero__l2.is-shimmering .ch {
+  background-image: linear-gradient(100deg, var(--prime) 0 38%, var(--sky) 50%, var(--prime) 62% 100%);
+  background-size: calc(var(--lw, 600px) * 3) 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: l2-shimmer 1200ms var(--ease) forwards;
+}
+@keyframes l2-shimmer {
+  from { background-position: calc(var(--lw, 600px) * -2 - var(--x, 0px)) 0; }
+  to { background-position: calc(0px - var(--x, 0px)) 0; }
+}
+
+/* Chips: the glass pill fades up, then text.js types the label behind a pixel caret */
+html.js-motion .hero__chips .chip { opacity: 0; translate: 0 12px; }
+html.js-motion.hero-in .hero__chips .chip {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 420ms var(--ease), translate 520ms var(--ease);
+}
+html.js-motion.hero-in .hero__chips .chip:nth-child(1) { transition-delay: 220ms; }
+html.js-motion.hero-in .hero__chips .chip:nth-child(2) { transition-delay: 400ms; }
+html.js-motion.hero-in .hero__chips .chip:nth-child(3) { transition-delay: 580ms; }
+
+/* Typed text (chips + mascot bubble). Chars keep their width while hidden: no shift. */
+html:is(.js-motion, .js-motion-sections) .is-typable .ch { opacity: 0; }
+html:is(.js-motion, .js-motion-sections) .is-typable .ch.is-on { opacity: 1; }
+.caret { display: inline-block; position: relative; width: 0; height: 0; pointer-events: none; }
+.caret::after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  bottom: -0.16em;
+  width: 0.45em;
+  height: 1.02em;
+  background: currentColor;
+  animation: caret-blink 640ms steps(1, jump-end) infinite;
+}
+.chip .caret::after { width: 0.38em; background: var(--sky); }
+.mascot__bubble .caret::after { width: 0.6em; height: 0.92em; bottom: -0.08em; background: var(--night); }
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Hero sub: word by word rise, 35ms stagger. Translate only (no opacity) so the
+   largest mobile text paints under the splash and LCP is recorded at first paint. */
+html.js-motion .hero__sub .w { display: inline-block; translate: 0 0.5em; }
+html.js-motion.hero-in .hero__sub .w {
+  translate: 0 0;
+  transition: translate 520ms var(--ease) calc(560ms + var(--i, 0) * 35ms);
+}
+
+/* CTA and ticker follow */
+html.js-motion .hero__actions { opacity: 0; translate: 0 14px; }
+html.js-motion .hero .ticker { opacity: 0; }
+/* Not clickable or focusable while invisible; discrete, returns the moment hero-in is set */
+html.js-motion:not(.hero-in) .hero__actions { visibility: hidden; }
+html.js-motion.hero-in .hero__actions {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 500ms var(--ease) 820ms, translate 600ms var(--ease) 820ms;
+}
+html.js-motion.hero-in .hero .ticker { opacity: 1; transition: opacity 600ms var(--ease) 1000ms; }
+
+/* ---------- Section h2: per word masked rise, once, when 30% is in view ---------- */
+
+/* Unsplit fallback (split failed or no words): whole line rises */
+html:is(.js-motion, .js-motion-sections) [data-lines]:not(.hero__title):not(.is-split) .mask > span {
+  translate: 0 110%;
+  transition: translate 700ms var(--ease);
+}
+html:is(.js-motion, .js-motion-sections) [data-lines]:not(.is-split).is-revealed .mask > span { translate: 0 0; }
+
+/* Each word clips itself (clip-path keeps the inline baseline, overflow would not) */
+[data-lines] .wm { display: inline-block; clip-path: inset(-0.2em -0.2em -0.26em -0.2em); }
+html:is(.js-motion, .js-motion-sections) [data-lines].is-split .w { display: inline-block; translate: 0 135%; }
+html:is(.js-motion, .js-motion-sections) [data-lines].is-split.is-revealed .w {
+  translate: 0 0;
+  transition: translate 720ms var(--ease) calc(var(--i, 0) * 70ms);
+}
+
+/* ---------- Shine: one diagonal sweep across the hero CTA every 4s ---------- */
+.btn--shine { overflow: hidden; }
+.btn--shine::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 55%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.26) 50%, transparent 70%);
+  transform: translate3d(-110%, 0, 0);
+  animation: shine-sweep 4s var(--ease) 3s infinite;
+}
+@keyframes shine-sweep {
+  0% { transform: translate3d(-110%, 0, 0); }
+  28%, 100% { transform: translate3d(200%, 0, 0); }
+}
+
+/* ---------- Shared liquid sheen for big glass panels (add class="glass-sheen") ----------
+   One soft 45 degree band (the CT slash angle) drifts across every 7s. Plain low alpha
+   white and horn stops, so it only lightens. No blend mode and no will-change: both
+   broke the parent's backdrop-filter in Chrome (hard seam). The drift runs only while
+   the panel is on screen (.is-sheen-on, toggled by reveal.js). Stagger with --sheen-delay. */
+.glass-sheen { position: relative; overflow: hidden; contain: paint; }
+.glass-sheen::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 0;
+  width: 70%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 32%, rgba(255, 255, 255, 0.07) 46%, rgba(238, 230, 214, 0.1) 50%, rgba(255, 255, 255, 0.07) 54%, transparent 68%);
+  transform: translate3d(-130%, 0, 0);
+}
+.glass-sheen.is-sheen-on::after { animation: glass-sheen 7s var(--ease) var(--sheen-delay, 1.2s) infinite; }
+@keyframes glass-sheen {
+  0% { transform: translate3d(-130%, 0, 0); }
+  45%, 100% { transform: translate3d(170%, 0, 0); }
+}
+
+/* Planner readout numbers rolled by text.js rollNumber(): fixed width digits */
+.roll-num { font-variant-numeric: tabular-nums; }
+
+/* ---------- Mascot peek ---------- */
+/* The bull waits below its bottom edge, then rises in pixel steps with a small
+   overshoot. layout.css owns placement; this only adds the clip. */
+html.js-motion .mascot,
+html.js-motion-sections .mascot--cta { clip-path: inset(-2000px -2000px 0 -2000px); }
+html.js-motion .mascot .mascot-img,
+html.js-motion-sections .mascot--cta .mascot-img { translate: 0 105%; }
+html.js-motion .mascot.is-peeking .mascot-img,
+html.js-motion-sections .mascot--cta.is-peeking .mascot-img {
+  translate: 0 0;
+  transition: translate 240ms steps(3, jump-end);
+  animation: mascot-peek 720ms backwards;
+}
+html.js-motion .mascot.is-peeking.is-excited .mascot-img { translate: 0 -8%; }
+@keyframes mascot-peek {
+  0% { translate: 0 105%; animation-timing-function: steps(7, jump-end); }
+  72% { translate: 0 -6%; animation-timing-function: steps(2, jump-end); }
+  100% { translate: 0 0; }
+}
+
+/* Speech bubble: pops in after the peek with a 3 step scale, then types its text */
+html.js-motion .mascot__bubble,
+html.js-motion-sections .mascot--cta .mascot__bubble {
+  opacity: 0;
+  scale: 0.3;
+  transform-origin: 50% 100%;
+  transition: opacity 160ms steps(2, jump-end), scale 160ms steps(2, jump-end);
+}
+html.js-motion .mascot.is-bubbling .mascot__bubble,
+html.js-motion-sections .mascot--cta.is-bubbling .mascot__bubble {
+  opacity: 1;
+  scale: 1;
+  transition: opacity 90ms steps(1, jump-start), scale 240ms steps(3, jump-start);
+}
+
+/* ---------- Reduced motion: everything visible and still, even if it flips mid visit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html.js-motion .hero__title .mask > span,
+  html:is(.js-motion, .js-motion-sections) [data-lines] .mask > span,
+  html.js-motion .hero__l2 .ch,
+  html:is(.js-motion, .js-motion-sections) [data-lines] .w,
+  html.js-motion .hero__sub .w,
+  html:is(.js-motion, .js-motion-sections) .is-typable .ch,
+  html.js-motion .hero__chips .chip,
+  html.js-motion .hero__actions,
+  html.js-motion .mascot .mascot-img,
+  html.js-motion .mascot__bubble,
+  html.js-motion-sections .mascot--cta .mascot-img,
+  html.js-motion-sections .mascot--cta .mascot__bubble {
+    opacity: 1;
+    translate: none;
+    scale: none;
+    transition: none;
+    animation: none;
+  }
+  html.js-motion .hero__l2.is-shimmering .ch {
+    background: none;
+    color: inherit;
+    -webkit-text-fill-color: currentColor;
+    animation: none;
+  }
+  html.js-motion .hero .ticker { opacity: 1; transition: none; }
+  .caret { display: none; }
+  .btn--shine::after { animation: none; display: none; }
+  .glass-sheen::after,
+  .glass-sheen.is-sheen-on::after { animation: none; transform: translate3d(45%, 0, 0); opacity: 0.6; }
+}
+
+/* Punctuation pulled tight against the preceding letter (see text.js tightenPunctuation) */
+h1 .pn, h2 .pn { margin-left: -0.09em; }

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{{seo.title}}</title>
+  <meta name="description" content="{{seo.description}}" />
+  <link rel="canonical" href="{{siteUrl}}/" />
+  <meta name="theme-color" content="#090b10" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{seo.title}}" />
+  <meta property="og:description" content="{{seo.description}}" />
+  <meta property="og:url" content="{{siteUrl}}/" />
+  <meta property="og:image" content="{{siteUrl}}/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{seo.title}}" />
+  <meta name="twitter:description" content="{{seo.description}}" />
+  <meta name="twitter:image" content="{{siteUrl}}/og.jpg" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/plus-jakarta-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/montserrat-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <style>
+    /* Critical: splash (inline so it paints before the bundle). Owner: lead. Total ~2.2s, fades at 1.85s. */
+    html,body{background:#090b10}
+    #splash{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(22px,4vw,36px);overflow:hidden;pointer-events:none;
+      background:radial-gradient(70% 60% at 68% 30%,rgba(86,131,218,.55),transparent 70%),radial-gradient(55% 45% at 22% 80%,rgba(42,96,214,.35),transparent 70%),radial-gradient(40% 40% at 88% 96%,rgba(208,140,112,.4),transparent 70%),#090b10;
+      animation:sp-out 420ms cubic-bezier(.2,.8,.2,1) 1850ms forwards}
+    #splash picture{display:contents}
+    #splash .sp__lock{display:flex;align-items:center;gap:clamp(12px,2.4vw,22px)}
+    #splash .sp__mark{width:clamp(84px,17vw,150px);color:#eef2fb;flex:none;
+      clip-path:polygon(0 0,0 0,-60% 100%,-60% 100%);animation:sp-slash 640ms cubic-bezier(.2,.8,.2,1) 120ms forwards}
+    #splash .sp__word{display:inline-flex;flex-direction:column;font-family:Montserrat,system-ui,sans-serif;color:#fff;line-height:.95}
+    #splash .sp__prime{font-weight:700;font-size:clamp(40px,8.6vw,78px);letter-spacing:.02em;display:flex;overflow:hidden}
+    #splash .sp__community{font-weight:300;font-size:clamp(17px,3.6vw,33px);letter-spacing:.08em;display:flex;justify-content:space-between}
+    #splash .sp__prime i,#splash .sp__community i{font-style:normal;display:inline-block}
+    #splash .sp__prime i{transform:translateY(110%);animation:sp-rise 520ms cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(520ms + var(--i)*55ms)}
+    #splash .sp__community i{opacity:0;transform:translateX(-.4em);animation:sp-in 420ms cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(900ms + var(--i)*35ms)}
+    #splash .sp__bar{position:relative;flex:none;width:min(240px,56vw);height:6px;
+      background:rgba(169,193,242,.14);clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%);overflow:hidden}
+    #splash .sp__bar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,#5683da 0 8px,#6f97e6 8px 14px);
+      transform:translateX(-100%);animation:sp-load 1500ms cubic-bezier(.4,0,.2,1) 150ms forwards}
+    #splash .sp__bull{position:absolute;right:clamp(8px,6vw,80px);bottom:0;width:clamp(110px,20vw,190px);height:auto;image-rendering:pixelated;
+      transform:translateY(100%);animation:sp-peek 520ms steps(6) 1000ms forwards}
+    @keyframes sp-slash{to{clip-path:polygon(0 0,160% 0,100% 100%,-60% 100%)}}
+    @keyframes sp-rise{to{transform:none}}
+    @keyframes sp-in{to{opacity:1;transform:none}}
+    @keyframes sp-load{to{transform:none}}
+    @keyframes sp-peek{to{transform:translateY(22%)}}
+    @keyframes sp-out{to{opacity:0;visibility:hidden}}
+    @media (prefers-reduced-motion:reduce){#splash{animation-delay:300ms;animation-duration:200ms}
+      #splash *,#splash *::after{animation:none!important;transform:none!important;opacity:1!important;clip-path:none!important}
+      #splash .sp__bull{transform:translateY(22%)!important}#splash .sp__bar{display:none}}
+  </style>
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <div id="splash" aria-hidden="true">
+    <div class="sp__lock">
+      <svg class="sp__mark" viewBox="0 0 79 50" fill="currentColor"><path d="M22 0H47L37 11H19.5C14 11.4 11 16.5 11 25S14.5 38.5 22 38.5H52.5L42 50H21.5C8 50 0 40 0 25S8.5 0 22 0Z"/><path d="M53 0H79L69 11H64V28.5L54 38.5V11H43Z"/><path d="M64 35.5V50H49.5Z"/></svg>
+      <span class="sp__word"><span class="sp__prime"><i style="--i:0">P</i><i style="--i:1">R</i><i style="--i:2">I</i><i style="--i:3">M</i><i style="--i:4">E</i></span><span class="sp__community"><i style="--i:0">C</i><i style="--i:1">O</i><i style="--i:2">M</i><i style="--i:3">M</i><i style="--i:4">U</i><i style="--i:5">N</i><i style="--i:6">I</i><i style="--i:7">T</i><i style="--i:8">Y</i></span></span>
+    </div>
+    <span class="sp__bar"></span>
+    <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><img class="sp__bull" src="/img/mascot.gif" width="331" height="265" alt="" /></picture>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="bg-fallback" class="bg-fallback" aria-hidden="true"></div>
+  <canvas id="bg3d" class="bg3d" aria-hidden="true"></canvas>
+
+  <header id="site-header" class="site-header">
+    <div class="header__inner wrap">
+      <a class="brand" href="#top" aria-label="CT Prime Community, back to top">
+        <svg class="brand__mark" viewBox="0 0 79 50" fill="currentColor" aria-hidden="true"><path d="M22 0H47L37 11H19.5C14 11.4 11 16.5 11 25S14.5 38.5 22 38.5H52.5L42 50H21.5C8 50 0 40 0 25S8.5 0 22 0Z"/><path d="M53 0H79L69 11H64V28.5L54 38.5V11H43Z"/><path d="M64 35.5V50H49.5Z"/></svg>
+        <span class="brand__word"><span class="brand__prime">Prime</span><span class="brand__community">Community</span></span>
+      </a>
+      <div class="header__actions">
+        <button id="mute-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="{{ui.muteLabel}}"></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero" aria-labelledby="hero-title">
+      <div class="hero__inner wrap">
+        <h1 id="hero-title" class="hero__title" data-lines>
+          <span class="mask"><span class="hero__l1">{{hero.line1}}</span></span>
+          <span class="mask"><span class="hero__l2">{{hero.line2}}</span></span>
+        </h1>
+        <ul class="hero__chips" aria-label="What you get">
+          <li class="chip">{{hero.chips.0}}</li>
+          <li class="chip">{{hero.chips.1}}</li>
+          <li class="chip">{{hero.chips.2}}</li>
+        </ul>
+        <p class="hero__sub">{{hero.sub}}</p>
+        <div class="hero__actions">
+          <a id="hero-join" class="btn btn--primary btn--lg btn--shine js-join" href="{{discord.url}}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1a15.3 15.3 0 0 0-5.4 0l-.5-1a16.6 16.6 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7a16.8 16.8 0 0 0 5 2.5l1.1-1.7a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 11 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.7a16.8 16.8 0 0 0 5-2.5c.4-4.3-.7-8-2.9-11.4ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+            {{hero.cta}}
+          </a>
+        </div>
+      </div>
+      <div id="ticker" class="ticker" aria-label="{{ticker.label}}" hidden>
+        <div class="ticker__track"></div>
+      </div>
+      <div class="mascot mascot--hero" aria-hidden="true">
+        <span class="mascot__bubble pixel">{{hero.bubble}}</span>
+        <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><img class="mascot-img" src="/img/mascot.gif" width="331" height="265" alt="" decoding="async" /></picture>
+      </div>
+    </section>
+
+    <section id="inside" class="section inside" aria-labelledby="inside-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="inside-title" data-lines><span class="mask"><span>{{inside.title}}</span></span></h2>
+          <p class="section-head__sub">{{inside.sub}}</p>
+        </div>
+        <div id="channels" class="channels"><!-- rendered by features/channels.js --></div>
+      </div>
+    </section>
+
+    <section id="planner" class="section planner" aria-labelledby="planner-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="channel">trade-plans</p>
+          <h2 id="planner-title" data-lines><span class="mask"><span>{{planner.title}}</span></span></h2>
+          <p class="section-head__sub">{{planner.sub}}</p>
+        </div>
+        <div id="planner-app" class="planner-app"><!-- rendered by features/planner.js --></div>
+      </div>
+    </section>
+
+    <section id="join" class="section steps" aria-labelledby="steps-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="steps-title" data-lines><span class="mask"><span>{{steps.title}}</span></span></h2>
+        </div>
+        <ol id="steps-list" class="steps__list"><!-- rendered by features/content.js --></ol>
+      </div>
+    </section>
+
+    <section id="faq" class="section faq" aria-labelledby="faq-title">
+      <div class="wrap faq__wrap">
+        <div class="section-head">
+          <h2 id="faq-title" data-lines><span class="mask"><span>{{faq.title}}</span></span></h2>
+        </div>
+        <div id="faq-list" class="faq__list"><!-- rendered by features/content.js --></div>
+      </div>
+    </section>
+
+    <section id="cta" class="final-cta" aria-labelledby="cta-title">
+      <div class="wrap final-cta__inner glass-sheen">
+        <svg class="final-cta__mark" viewBox="0 0 79 50" fill="currentColor" aria-hidden="true"><path d="M22 0H47L37 11H19.5C14 11.4 11 16.5 11 25S14.5 38.5 22 38.5H52.5L42 50H21.5C8 50 0 40 0 25S8.5 0 22 0Z"/><path d="M53 0H79L69 11H64V28.5L54 38.5V11H43Z"/><path d="M64 35.5V50H49.5Z"/></svg>
+        <h2 id="cta-title" data-lines><span class="mask"><span>{{cta.title}}</span></span></h2>
+        <p class="final-cta__sub">{{cta.sub}}</p>
+      </div>
+      <div class="mascot mascot--cta" aria-hidden="true">
+        <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><img class="mascot-img" src="/img/mascot.gif" width="331" height="265" alt="" loading="lazy" decoding="async" /></picture>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer">
+    <div class="wrap footer__inner">
+      <div class="footer__brand">
+        <svg class="brand__mark" viewBox="0 0 79 50" fill="currentColor" aria-hidden="true"><path d="M22 0H47L37 11H19.5C14 11.4 11 16.5 11 25S14.5 38.5 22 38.5H52.5L42 50H21.5C8 50 0 40 0 25S8.5 0 22 0Z"/><path d="M53 0H79L69 11H64V28.5L54 38.5V11H43Z"/><path d="M64 35.5V50H49.5Z"/></svg>
+        <span class="brand__word"><span class="brand__prime">Prime</span><span class="brand__community">Community</span></span>
+      </div>
+      <p id="disclaimer" class="footer__note">{{footer.disclaimer}}</p>
+      <p class="footer__copy">&copy; <span id="year">2026</span> {{footer.copyright}}</p>
+    </div>
+  </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
