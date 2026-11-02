@@ -145,6 +145,15 @@ html:is(.js-motion, .js-motion-sections) [data-lines].is-split.is-revealed .w {
   background: linear-gradient(135deg, transparent 32%, rgba(255, 255, 255, 0.07) 46%, rgba(238, 230, 214, 0.1) 50%, rgba(255, 255, 255, 0.07) 54%, transparent 68%);
   transform: translate3d(-130%, 0, 0);
 }
+/* Below desktop the panels are tall and narrow, so the 45 degree band reaches the
+   box's left and right sides and their straight edges read as a hard vertical seam.
+   Fade those sides out; the band itself and its drift stay the same. */
+@media (max-width: 899.98px) {
+  .glass-sheen::after {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  }
+}
 .glass-sheen.is-sheen-on::after { animation: glass-sheen 7s var(--ease) var(--sheen-delay, 1.2s) infinite; }
 @keyframes glass-sheen {
   0% { transform: translate3d(-130%, 0, 0); }

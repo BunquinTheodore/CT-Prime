@@ -140,6 +140,10 @@ main, .site-footer { position: relative; z-index: 1; }
   width: 6px; height: 4px; background: var(--horn);
   box-shadow: 2px 0 0 #000, -2px 0 0 #000, 4px 4px 0 var(--horn), 2px 4px 0 #000, 6px 4px 0 #000, 4px 6px 0 #000;
 }
+/* Phones: the hero bull is at its 120px minimum, so lift the bubble up and left of the horns */
+@media (max-width: 600px) {
+  .mascot--hero .mascot__bubble { right: 96%; top: -18%; }
+}
 
 /* ---------- Final section: closing glass card, no button ---------- */
 .final-cta {
@@ -168,7 +172,8 @@ main, .site-footer { position: relative; z-index: 1; }
 @media (max-width: 600px) { .final-cta__sub { font-size: 17px; } }
 
 /* Bull sits at the card's lower right corner: its head overlaps only the card's bottom padding, not the copy */
-.mascot--cta { left: calc(50% + min(50% - var(--gutter), 390px) - var(--mascot-w) * 0.85); }
+/* Capped so the whole sprite stays 8px inside the viewport on narrow screens (desktop resolves to the first term) */
+.mascot--cta { left: min(calc(50% + min(50% - var(--gutter), 390px) - var(--mascot-w) * 0.85), calc(100% - var(--mascot-w) - 8px)); }
 
 /* ---------- Footer ---------- */
 .site-footer { padding: 48px 0 calc(40px + var(--safe-b)); border-top: 1px solid var(--line); background: var(--night); }
@@ -176,6 +181,26 @@ main, .site-footer { position: relative; z-index: 1; }
 .footer__brand { display: inline-flex; align-items: center; gap: 10px; color: #f4f6fb; }
 .footer__note, .footer__copy { font-size: 14px; color: var(--text-soft); }
 .footer__note { max-width: 75ch; }
+
+/* ---------- Short landscape phones: slimmer header, compact hero so the CTA is on the first screen ---------- */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root { --header-h: 56px; }
+  .brand__prime { font-size: 21px; }
+  .brand__community { font-size: 14px; }
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--header-h) + var(--safe-t) + 8px);
+    padding-bottom: calc(var(--ticker-h) + var(--mascot-w) * 0.5 + 12px);
+  }
+  .hero__title { font-size: clamp(36px, 12.5svh, 48px); }
+  .hero__chips { margin-top: 12px; }
+  .chip { min-height: 34px; padding: 6px 14px; font-size: 14px; }
+  .hero__sub { margin-top: 10px; font-size: 16px; }
+  .hero__actions { margin-top: 16px; }
+  #hero-join { --btn-h: 52px; }
+  /* Compact hero puts the bull beside the button, so the bubble rises above the head, right of the CTA */
+  .mascot--hero .mascot__bubble { right: 44%; top: -36%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .site-header::before, .site-header.is-scrolled::before { transition: none; }

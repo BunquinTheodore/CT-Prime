@@ -12,6 +12,7 @@ const RISK_PRESETS = [0.5, 1, 2]
 const HIGH_RISK_PCT = 5
 const LADDER_PAD = 0.14
 const TAG_PX = 26
+const TAG_GAP_PX = 6
 const TAG_MIN = 0.08
 const TAG_MAX = 0.92
 
@@ -213,7 +214,9 @@ function renderLadder(ui, v, showTarget) {
     ui.marks[k].style.transform = `translateY(${y(v[k]) * 100}%)`
   })
 
-  const gap = TAG_PX / (ui.ladder.clientHeight || 200)
+  const pill = ui.tags.entry.firstElementChild
+  const tagPx = Math.max(TAG_PX, (pill ? pill.offsetHeight : 0) + TAG_GAP_PX)
+  const gap = tagPx / (ui.ladder.clientHeight || 200)
   const keys = showTarget ? ['target', 'entry', 'stop'] : ['entry', 'stop']
   const ys = spreadTags(keys.map((k) => y(v[k])), gap)
   keys.forEach((k, i) => {

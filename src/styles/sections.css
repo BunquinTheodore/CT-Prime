@@ -44,11 +44,13 @@
    two glass tones inside (sidebar denser, content lighter), like Discord's two panes. */
 .channels {
   display: grid; grid-template-columns: 1fr; min-height: 420px;
-  border: 1px solid var(--g-line); border-radius: var(--radius-l); overflow: hidden;
+  border: 1px solid var(--g-line); border-radius: var(--radius-l); overflow: hidden; overflow: clip;
   background: transparent; box-shadow: var(--g-hi), var(--g-shadow);
   -webkit-backdrop-filter: var(--g-blur); backdrop-filter: var(--g-blur);
 }
 .channels.is-ready { min-height: 0; }
+/* Beats motion.css .glass-sheen { overflow: hidden }: clip is not a scroll container, so the 1380px sheen cannot scroll the panel */
+.channels.glass-sheen { overflow: hidden; overflow: clip; }
 .channels__side {
   background: var(--g-side); border-bottom: 1px solid var(--g-line); padding-bottom: 12px; min-width: 0;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -61,7 +63,8 @@
 .channels__mark { width: 28px; flex: none; color: var(--text); }
 .channels__cat { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .channels__list {
-  position: relative; display: flex; gap: 8px; padding: 2px 16px 4px;
+  /* 6px block padding keeps the 4px focus ring inside this scroll container; margins give the space back */
+  position: relative; display: flex; gap: 8px; padding: 6px 16px 6px; margin-block: -4px -2px;
   overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none;
   -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
   mask-image: linear-gradient(to right, #000 85%, transparent);
@@ -85,6 +88,7 @@
 }
 
 .channels__stage { position: relative; display: grid; min-width: 0; overflow: hidden; isolation: isolate; background: var(--g-fill); }
+.channels__stage { overflow: clip; } /* clip, not a scroll container: focus or find in page cannot shift the panel */
 .channels__panel {
   grid-area: 1 / 1; min-width: 0; opacity: 0; visibility: hidden; transform: translateY(10px);
   transition: opacity 240ms var(--ease), transform 320ms var(--ease), visibility 0s linear 320ms;
@@ -169,6 +173,14 @@
   content: ''; position: absolute; left: 6px; bottom: -9px; width: 6px; height: 6px; background: var(--horn);
   box-shadow: -6px 6px 0 var(--horn);
 }
+@media (max-width: 379px) {
+  /* Narrow phones: the 216px mascot box cannot hold the bubble at +34px, so pin it inside the right edge */
+  .channels__bubble { left: auto; right: 4px; }
+}
+@media (max-width: 719px) {
+  /* Same stacked header on every channel, so the panel does not jump between tabs */
+  .channels__bar { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
 
 @media (min-width: 720px) {
   .channels { grid-template-columns: 248px minmax(0, 1fr); min-height: 460px; }
@@ -217,6 +229,11 @@
 .step:last-child .step__link { display: none; }
 .step__title { grid-column: 2; grid-row: 1; align-self: center; font-size: var(--fs-h3); }
 .step__body { grid-column: 2; grid-row: 2; margin-top: 8px; color: var(--text-soft); max-width: 36ch; }
+@media (max-width: 379px) {
+  .step { grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; padding: 20px 16px 22px; }
+  .step__num { font-size: 48px; }
+  .step__link { left: calc(16px + 20px - 5px); }
+}
 
 @media (min-width: 860px) {
   .steps__list { --steps-gap: clamp(20px, 2.6vw, 32px); grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -244,6 +261,7 @@
   display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 16px 20px;
   list-style: none; cursor: pointer; font-weight: 700; font-size: 17px; line-height: 1.35; border-radius: var(--radius);
 }
+@media (max-width: 599px) { .faq__q { text-wrap: balance; } }
 .faq__q::-webkit-details-marker { display: none; }
 .faq__q:hover .faq__icon { background: rgba(86, 131, 218, 0.22); }
 .faq__icon {

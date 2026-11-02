@@ -90,3 +90,9 @@ p { text-wrap: pretty; max-width: 60ch; }
 }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 picture { display: contents; }
+
+/* Short landscape phones: tighten vertical rhythm so sections don't float in ~45% empty screen */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root { --section-y: 52px; }
+  .section .section-head { margin-bottom: 28px; }
+}
