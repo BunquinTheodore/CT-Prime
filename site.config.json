@@ -197,7 +197,9 @@
     "disclaimer": "CT Prime Community is an educational community. Nothing on this site or in the Discord is financial advice. Crypto assets are highly volatile and you may lose some or all of your money. Trade only what you can afford to lose.",
     "copyright": "CT Prime Community"
   },
-  "socials": {},
+  "socials": {
+    "facebook": "https://www.facebook.com/ctprimecommunity"
+  },
   "ui": {
     "muteLabel": "Mute sounds",
     "tickerError": "",
