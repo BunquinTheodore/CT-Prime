@@ -2,6 +2,11 @@
 @font-face { font-family: 'Jakarta'; src: url('/fonts/plus-jakarta-sans-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'Jakarta'; src: url('/fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
 @font-face { font-family: 'Jakarta'; src: url('/fonts/plus-jakarta-sans-latin-800-normal.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+/* Metric matched fallbacks (Arial resized to Plus Jakarta's average glyph width and vertical metrics,
+   computed with fontTools). Text wraps the same before and after the webfont swaps in, so the
+   vertically centered hero does not shift (CLS) on slow connections. */
+@font-face { font-family: 'Jakarta Fallback'; src: local('Arial'), local('ArialMT'), local('Helvetica'); font-weight: 400 600; size-adjust: 104.6%; ascent-override: 99.3%; descent-override: 21.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Jakarta Fallback'; src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'); font-weight: 700 900; size-adjust: 100.8%; ascent-override: 103%; descent-override: 22%; line-gap-override: 0%; }
 @font-face { font-family: 'Montserrat'; src: url('/fonts/montserrat-latin-300-normal.woff2') format('woff2'); font-weight: 300; font-display: swap; }
 @font-face { font-family: 'Montserrat'; src: url('/fonts/montserrat-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
 @font-face { font-family: 'Silkscreen'; src: url('/fonts/silkscreen-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
@@ -35,7 +40,7 @@
   --glow-prime: 0 0 0 1px rgba(86, 131, 218, 0.5), 0 10px 40px rgba(86, 131, 218, 0.35);
 
   /* Type */
-  --font: 'Jakarta', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font: 'Jakarta', 'Jakarta Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-logo: 'Montserrat', var(--font);
   --font-pixel: 'Silkscreen', ui-monospace, monospace;
   --fs-h1: clamp(44px, 8.4vw, 116px);
