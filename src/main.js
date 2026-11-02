@@ -13,7 +13,7 @@ import { initContent } from './features/content.js'
 import { initChannels } from './features/channels.js'
 import { initTicker } from './features/ticker.js'
 import { initPlanner } from './features/planner.js'
-import { initReveal } from './effects/reveal.js'
+import { initReveal, HERO_DONE_EVENT } from './effects/reveal.js'
 import { initMascot } from './effects/mascot.js'
 import { initSfx } from './effects/sfx.js'
 import { tightenPunctuation } from './effects/text.js'
@@ -43,5 +43,17 @@ const startBackground = () =>
   safe('bg3d', () => import('./effects/background3d.js').then((m) => m.initBackground3D()))
 
 const onIdle = (cb) => ('requestIdleCallback' in window ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 1200))
-if (document.readyState === 'complete') onIdle(startBackground)
-else addEventListener('load', () => onIdle(startBackground), { once: true })
+const HERO_DONE_FALLBACK_MS = 5000
+
+/* The WebGL background compiles a shader (a long main thread task), so it waits until the
+   hero sequence is done and the page is idle, keeping it out of LCP and blocking time. */
+function whenHeroDone(cb) {
+  if (document.documentElement.classList.contains('hero-done')) return cb()
+  let done = false
+  const run = () => { if (!done) { done = true; cb() } }
+  document.addEventListener(HERO_DONE_EVENT, run, { once: true })
+  setTimeout(run, HERO_DONE_FALLBACK_MS)
+}
+
+const afterLoad = (cb) => (document.readyState === 'complete' ? cb() : addEventListener('load', cb, { once: true }))
+afterLoad(() => whenHeroDone(() => onIdle(startBackground)))

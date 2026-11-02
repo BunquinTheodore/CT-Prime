@@ -308,7 +308,7 @@ export function initBackground3D() {
   const canvas = document.getElementById('bg3d')
   if (!canvas || session || canvas.dataset.bg3d) return
   canvas.dataset.bg3d = 'init'
-  if (degradeReason()) return
+  if (degradeReason() || isMobile()) return // phones keep the static CSS aurora: no long shader compile task
   start(canvas).catch(() => {
     if (session) session.dispose()
     document.documentElement.classList.remove(HAS_CLASS)

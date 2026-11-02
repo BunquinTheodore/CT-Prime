@@ -18,6 +18,7 @@
   <meta name="twitter:title" content="{{seo.title}}" />
   <meta name="twitter:description" content="{{seo.description}}" />
   <meta name="twitter:image" content="{{siteUrl}}/og.jpg" />
+  <link rel="preconnect" href="https://data-api.binance.vision" crossorigin />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -66,7 +67,7 @@
       <span class="sp__word"><span class="sp__prime"><i style="--i:0">P</i><i style="--i:1">R</i><i style="--i:2">I</i><i style="--i:3">M</i><i style="--i:4">E</i></span><span class="sp__community"><i style="--i:0">C</i><i style="--i:1">O</i><i style="--i:2">M</i><i style="--i:3">M</i><i style="--i:4">U</i><i style="--i:5">N</i><i style="--i:6">I</i><i style="--i:7">T</i><i style="--i:8">Y</i></span></span>
     </div>
     <span class="sp__bar"></span>
-    <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><img class="sp__bull" src="/img/mascot.gif" width="331" height="265" alt="" /></picture>
+    <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><source srcset="/img/mascot.webp" type="image/webp"><img class="sp__bull" src="/img/mascot.gif" width="331" height="265" alt="" /></picture>
   </div>
 
   <a class="skip-link" href="#main">Skip to content</a>
@@ -75,9 +76,9 @@
 
   <header id="site-header" class="site-header">
     <div class="header__inner wrap">
-      <a class="brand" href="#top" aria-label="CT Prime Community, back to top">
+      <a class="brand" href="#top">
         <svg class="brand__mark" viewBox="0 0 79 50" fill="currentColor" aria-hidden="true"><path d="M22 0H47L37 11H19.5C14 11.4 11 16.5 11 25S14.5 38.5 22 38.5H52.5L42 50H21.5C8 50 0 40 0 25S8.5 0 22 0Z"/><path d="M53 0H79L69 11H64V28.5L54 38.5V11H43Z"/><path d="M64 35.5V50H49.5Z"/></svg>
-        <span class="brand__word"><span class="brand__prime">Prime</span><span class="brand__community">Community</span></span>
+        <span class="sr-only">CT </span><span class="brand__word"><span class="brand__prime">Prime</span> <span class="brand__community">Community</span></span>
       </a>
       <div class="header__actions">
         <button id="mute-toggle" class="icon-btn" type="button" aria-pressed="false" aria-label="{{ui.muteLabel}}"></button>
@@ -97,7 +98,7 @@
           <li class="chip">{{hero.chips.1}}</li>
           <li class="chip">{{hero.chips.2}}</li>
         </ul>
-        <p class="hero__sub">{{hero.sub}}</p>
+        <p class="hero__sub" data-split="1" style="--words: {{count:hero.sub}}">{{split:hero.sub}}</p>
         <div class="hero__actions">
           <a id="hero-join" class="btn btn--primary btn--lg btn--shine js-join" href="{{discord.url}}" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1a15.3 15.3 0 0 0-5.4 0l-.5-1a16.6 16.6 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7a16.8 16.8 0 0 0 5 2.5l1.1-1.7a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 11 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.7a16.8 16.8 0 0 0 5-2.5c.4-4.3-.7-8-2.9-11.4ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
@@ -110,7 +111,7 @@
       </div>
       <div class="mascot mascot--hero" aria-hidden="true">
         <span class="mascot__bubble pixel">{{hero.bubble}}</span>
-        <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><img class="mascot-img" src="/img/mascot.gif" width="331" height="265" alt="" decoding="async" /></picture>
+        <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><source srcset="/img/mascot.webp" type="image/webp"><img class="mascot-img" src="/img/mascot.gif" width="331" height="265" alt="" decoding="async" /></picture>
       </div>
     </section>
 
@@ -160,7 +161,7 @@
         <p class="final-cta__sub">{{cta.sub}}</p>
       </div>
       <div class="mascot mascot--cta" aria-hidden="true">
-        <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><img class="mascot-img" src="/img/mascot.gif" width="331" height="265" alt="" loading="lazy" decoding="async" /></picture>
+        <picture><source srcset="/img/mascot.png" media="(prefers-reduced-motion: reduce)"><source srcset="/img/mascot.webp" type="image/webp"><img class="mascot-img" src="/img/mascot.gif" width="331" height="265" alt="" loading="lazy" decoding="async" /></picture>
       </div>
     </section>
   </main>
